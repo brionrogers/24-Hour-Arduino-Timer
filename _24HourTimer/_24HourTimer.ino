@@ -1,4 +1,4 @@
-int MotorControl = 5;    // Digital Arduino Pin used to control the motor
+int pinContolled = 5;    // Digital Arduino Pin used to control the device
 int resetPin = 12;
 unsigned long previousMillis = 0;
 
@@ -6,14 +6,14 @@ unsigned long interval = (unsigned long) 1000 * 60 * 60 * 20;
 unsigned long interval24 = (unsigned long) 1000 * 60 * 60 * 24;
 unsigned long interval20 = (unsigned long) 1000 * 60 * 60 * 20;
 unsigned long interval4 = (unsigned long) 1000 * 60 * 60 * 4;
-unsigned long intervalTwoMinute = (unsigned long) 1000 * 60 * 3;
+unsigned long intervalTwoMinute = (unsigned long) 1000 * 60 * 2;
 
 void setup()
 {
    //digitalWrite(resetPin, HIGH);
   // declare pin 5 to be an output:
   Serial.begin(9600);
-  pinMode(MotorControl, OUTPUT);
+  pinMode(deviceControl, OUTPUT);
   pinMode(resetPin, OUTPUT);
  
 }
@@ -29,10 +29,10 @@ void loop()
     currentMillis = millis();
     //Serial.println("Currently inside the on loop");
     delay(1000);
-    if (digitalRead(MotorControl) == LOW)
+    if (digitalRead(deviceControl) == LOW)
     {
       Serial.println("You just turned the light ON");
-      digitalWrite(MotorControl, HIGH);
+      digitalWrite(deviceControl, HIGH);
     }
 
 
@@ -49,10 +49,10 @@ void loop()
     currentMillis = millis();
     //Serial.println("Currently inside the off loop");
     delay(1000);
-    if (digitalRead(MotorControl) == HIGH)
+    if (digitalRead(deviceControl) == HIGH)
     {
       Serial.println("You just turned the light OFF");
-      digitalWrite(MotorControl, LOW);
+      digitalWrite(deviceControl, LOW);
     }
   }
 
@@ -69,23 +69,23 @@ void loop()
 }
 
 void turnLightOn() {
-  if (digitalRead(MotorControl) == LOW)
+  if (digitalRead(deviceControl) == LOW)
   {
-    digitalWrite(MotorControl, HIGH);
+    digitalWrite(deviceControl, HIGH);
   }
 }
 
 void turnLightOff() {
-  if (digitalRead(MotorControl) == HIGH)
+  if (digitalRead(deviceControl) == HIGH)
   {
-    digitalWrite(MotorControl, LOW);
+    digitalWrite(deviceControl, LOW);
   }
 }
 
 void(* resetFunc) (void) = 0; //declare reset function @ address 0
 
 boolean checkLight() {
-  if (digitalRead(MotorControl) == HIGH)
+  if (digitalRead(deviceControl) == HIGH)
   {
     return true;
   } else {
